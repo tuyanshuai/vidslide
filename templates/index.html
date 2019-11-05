@@ -11,22 +11,44 @@
 
 	<body>
 		<div id="video" style="width: 100%; height: 400px;">
-			<video id="videocontainer"></video>
+			<video id="videocontainer">xxx</video>
 		</div>
 		<script type="text/javascript" src="/ckplayer/ckplayer.js"></script>
+		<script type="text/javascript" src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+
 		<script type="text/javascript">
 			var videoObject = {
 				container: '#video', //容器的ID或className
 				variable: 'player',//播放函数名称
-				poster:'../material/poster.jpg',//封面图片
+				poster:'poster.jpg',//封面图片
 				mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
 				mobileAutoFull:false,//在移动端播放后是否按系统设置的全屏播放
 				h5container:'#videocontainer',//h5环境中使用自定义容器
+				autoplay: 1,
 				video: [//视频地址列表形式
 					['test.mp4', 'video/mp4', '中文标清', 0],
 				]
+
 			};
 			var player = new ckplayer(videoObject);
+		</script>
+
+
+
+		<script type="text/javascript">
+
+			var myElement = document.getElementById('video');
+
+			// create a simple instance
+			// by default, it only adds horizontal recognizers
+			var mc = new Hammer(myElement);
+
+			mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+			// listen to events...
+			mc.on("swipeup", function(ev) {
+				alert(ev.type +" gesture detected.")
+			});
+
 		</script>
 		<p>本页观看需要在支持h5环境的浏览器上，视频格式需要是h5支持的mp4</p>
 	</body>
