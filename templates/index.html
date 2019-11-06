@@ -3,6 +3,8 @@
 
 	<head>
 		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+
 		<title>ckplayer</title>
 		
 		<style type="text/css">body{margin:0;padding:0px;font-family:"Microsoft YaHei",YaHei,"微软雅黑",SimHei,"黑体";font-size:14px}</style>
@@ -10,12 +12,12 @@
 	</head>
 
 	<body>
-		<div id="video" style="width: 100%; height: 400px;">
-			<video id="videocontainer">xxx</video>
+		<div id="video" style="width: 100%; height: 100%; min-height:667px">
+			<video id="videocontainer" ></video>
 		</div>
 		<script type="text/javascript" src="/ckplayer/ckplayer.js"></script>
 		<script type="text/javascript" src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			var videoObject = {
 				container: '#video', //容器的ID或className
@@ -31,11 +33,8 @@
 
 			};
 			var player = new ckplayer(videoObject);
-		</script>
 
 
-
-		<script type="text/javascript">
 
 			var myElement = document.getElementById('video');
 
@@ -46,8 +45,32 @@
 			mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 			// listen to events...
 			mc.on("swipeup", function(ev) {
-				alert(ev.type +" gesture detected.")
-			});
+
+
+
+				// request url
+
+				$.post("next?history=['test.mp4','b']", function(data,status){
+					delete player;
+
+                    videoObject.video[0][0] = data.url;
+
+					var player = new ckplayer(videoObject);
+
+         		});
+
+<!--				alert(ev.type +" gesture detected.")-->
+			 })
+
+
+
+		</script>
+
+
+
+		<script type="text/javascript">
+
+
 
 		</script>
 		<p>本页观看需要在支持h5环境的浏览器上，视频格式需要是h5支持的mp4</p>
